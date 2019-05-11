@@ -1,4 +1,4 @@
-package models;
+package com.jaarquesuoc.shop.products.models;
 
 import lombok.Builder;
 import lombok.Data;
