@@ -1,12 +1,18 @@
 spring:
   application.name: products-ws
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 eureka:
   client.serviceUrl.defaultZone: ${EUREKA_URL:http://localhost:7100/eureka}
   instance:
     hostname: ${HOSTNAME:localhost}
-    non-secure-port: ${PUBLIC_PORT:7001}
-    secure-port: ${PUBLIC_PORT:7001}
+    non-secure-port: ${PUBLIC_PORT:7002}
+    secure-port: ${PUBLIC_PORT:7002}
 
 server:
-  port: ${PORT:7001}
+  port: ${PORT:7002}
