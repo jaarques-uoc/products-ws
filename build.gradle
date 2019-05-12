@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
+	id 'net.ltgt.apt' version '0.8'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -24,12 +25,15 @@ ext {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile 'org.mapstruct:mapstruct:1.3.0.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final'
 }
 
 dependencyManagement {
