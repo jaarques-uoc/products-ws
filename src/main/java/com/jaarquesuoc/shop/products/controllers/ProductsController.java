@@ -1,7 +1,7 @@
 package com.jaarquesuoc.shop.products.controllers;
 
 import lombok.RequiredArgsConstructor;
-import com.jaarquesuoc.shop.products.models.Product;
+import com.jaarquesuoc.shop.products.dtos.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
