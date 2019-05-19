@@ -1,5 +1,6 @@
 package com.jaarquesuoc.shop.products.controllers;
 
+import com.jaarquesuoc.shop.products.dtos.InitialisationDto;
 import com.jaarquesuoc.shop.products.dtos.ProductDto;
 import com.jaarquesuoc.shop.products.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.jaarquesuoc.shop.products.dtos.InitialisationDto.InitialisationStatus.OK;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -20,9 +22,13 @@ public class InitialisationController {
     private final ProductService productService;
 
     @GetMapping("/init")
-    public List<ProductDto> initialiseDB() {
+    public InitialisationDto initialiseDB() {
         productService.cleanDb();
-        return productService.upsertProducts(buildProducts());
+
+        return InitialisationDto.builder()
+            .initialisationStatus(OK)
+            .metadata(productService.upsertProducts(buildProducts()))
+            .build();
     }
 
     private List<ProductDto> buildProducts() {
