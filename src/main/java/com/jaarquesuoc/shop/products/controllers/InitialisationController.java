@@ -1,5 +1,6 @@
 package com.jaarquesuoc.shop.products.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jaarquesuoc.shop.products.dtos.InitialisationDto;
 import com.jaarquesuoc.shop.products.dtos.ProductDto;
 import com.jaarquesuoc.shop.products.services.ProductService;
@@ -8,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static com.jaarquesuoc.shop.products.dtos.InitialisationDto.InitialisationStatus.OK;
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,7 +25,7 @@ public class InitialisationController {
     private final ProductService productService;
 
     @GetMapping("/init")
-    public InitialisationDto initialiseDB() {
+    public InitialisationDto initialiseDB() throws IOException {
         productService.cleanDb();
 
         return InitialisationDto.builder()
@@ -31,19 +34,11 @@ public class InitialisationController {
             .build();
     }
 
-    private List<ProductDto> buildProducts() {
-        return IntStream.range(0, 30)
-            .mapToObj(i -> buildProduct(String.valueOf(i)))
-            .collect(toList());
-    }
+    private List<ProductDto> buildProducts() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        File initialFile = new File("products.json");
+        InputStream targetStream = new FileInputStream(initialFile);
 
-    private ProductDto buildProduct(final String id) {
-        return ProductDto.builder()
-            .id(id)
-            .name("Item name " + id)
-            .description("Some description")
-            .price(BigDecimal.valueOf(12.23D))
-            .imageUrl("https://static.cardmarket.com/img/548dd39417c935651fbd98c3ee6d5951/items/1/WAR/372131.jpg")
-            .build();
+        return Arrays.asList(mapper.readValue(targetStream, ProductDto[].class));
     }
 }
