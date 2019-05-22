@@ -11,7 +11,7 @@ Command line tools:
     * run: `./gradlew bootRun`
 * Docker:
     * build: `docker build --tag=products-ws .`
-    * run: `docker run -p 7002:8080 -t products-ws`
+    * run: `docker run -p 7002:7002 -t products-ws`
     * stop: `docker stop $(docker ps -q --filter ancestor=products-ws)`
     * stop all containers: `docker stop $(docker ps -a -q)`
 
