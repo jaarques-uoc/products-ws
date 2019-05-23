@@ -15,7 +15,10 @@ Command line tools:
     * stop: `docker stop $(docker ps -q --filter ancestor=products-ws)`
     * stop all containers: `docker stop $(docker ps -a -q)`
 
-* Urls:
-    * Travis CI history: https://travis-ci.com/jaarques-uoc/products-ws/
-    * Docker image: https://cloud.docker.com/repository/docker/jaarquesuoc/products-ws
-    * Heroku app health-check: https://products-ws.herokuapp.com/actuator/health
+Initialization endpoint:
+* `curl localhost:700/init`: It initialises the application with 24 products.
+
+Monitoring urls:
+* Travis CI history: https://travis-ci.com/jaarques-uoc/products-ws/
+* Docker image: https://cloud.docker.com/repository/docker/jaarquesuoc/products-ws
+* Heroku app health-check: https://products-ws.herokuapp.com/actuator/health
