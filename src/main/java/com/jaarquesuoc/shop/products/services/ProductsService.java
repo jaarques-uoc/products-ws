@@ -21,18 +21,18 @@ public class ProductsService {
     private final ProductsRepository productsRepository;
 
     public List<ProductDto> getAllProductDtos() {
-        return productsRepository.findAll()
-            .stream()
-            .map(ProductsMapper.INSTANCE::toProductDto)
-            .collect(toList());
+        List<Product> products = productsRepository.findAll();
+
+        return ProductsMapper.INSTANCE.toProductDtos(products);
     }
 
     public List<ProductDto> getAllProductDtosById(final List<String> ids) {
-        Iterable<Product> products = productsRepository.findAllById(ids);
+        Iterable<Product> productsIterable = productsRepository.findAllById(ids);
 
-        return StreamSupport.stream(products.spliterator(), false)
-            .map(ProductsMapper.INSTANCE::toProductDto)
+        List<Product> products = StreamSupport.stream(productsIterable.spliterator(), false)
             .collect(toList());
+
+        return ProductsMapper.INSTANCE.toProductDtos(products);
     }
 
     public Optional<ProductDto> getProductDto(final String id) {
@@ -46,13 +46,11 @@ public class ProductsService {
     }
 
     public List<ProductDto> upsertProducts(final List<ProductDto> productDtos) {
-        List<Product> products = productDtos.stream()
-            .map(ProductsMapper.INSTANCE::toProduct)
-            .collect(toList());
+        List<Product> products = ProductsMapper.INSTANCE.toProducts(productDtos);
 
-        return productsRepository.saveAll(products).stream()
-            .map(ProductsMapper.INSTANCE::toProductDto)
-            .collect(toList());
+        List<Product> upsertedProducts = productsRepository.saveAll(products);
+
+        return ProductsMapper.INSTANCE.toProductDtos(upsertedProducts);
     }
 
     public void cleanDb() {
