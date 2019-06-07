@@ -1,7 +1,7 @@
 package com.jaarquesuoc.shop.products.controllers;
 
 import com.jaarquesuoc.shop.products.dtos.ProductDto;
-import com.jaarquesuoc.shop.products.services.ProductService;
+import com.jaarquesuoc.shop.products.services.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,23 +20,23 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductsController {
 
-    private final ProductService productService;
+    private final ProductsService productsService;
 
     @GetMapping("/products/{id}")
     public ProductDto getProductDto(@PathVariable final String id) {
-        return productService.getProductDto(id)
+        return productsService.getProductDto(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/products")
     public List<ProductDto> getProductDtos(@RequestParam(value = "ids", required = false) final List<String> ids) {
         return Optional.ofNullable(ids)
-            .map(productService::getAllProductDtosById)
-            .orElse(productService.getAllProductDtos());
+            .map(productsService::getAllProductDtosById)
+            .orElse(productsService.getAllProductDtos());
     }
 
     @PostMapping("/products")
     public ProductDto createProduct(@RequestBody ProductDto productDto) {
-        return productService.upsertProduct(productDto);
+        return productsService.upsertProduct(productDto);
     }
 }

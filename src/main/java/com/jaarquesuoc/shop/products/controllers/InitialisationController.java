@@ -3,7 +3,7 @@ package com.jaarquesuoc.shop.products.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jaarquesuoc.shop.products.dtos.InitialisationDto;
 import com.jaarquesuoc.shop.products.dtos.ProductDto;
-import com.jaarquesuoc.shop.products.services.ProductService;
+import com.jaarquesuoc.shop.products.services.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -21,15 +21,15 @@ import static com.jaarquesuoc.shop.products.dtos.InitialisationDto.Initialisatio
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class InitialisationController {
 
-    private final ProductService productService;
+    private final ProductsService productsService;
 
     @GetMapping("/init")
     public InitialisationDto initialiseDB() throws IOException {
-        productService.cleanDb();
+        productsService.cleanDb();
 
         return InitialisationDto.builder()
             .initialisationStatus(OK)
-            .metadata(productService.upsertProducts(buildProducts()))
+            .metadata(productsService.upsertProducts(buildProducts()))
             .build();
     }
 

@@ -1,9 +1,9 @@
 package com.jaarquesuoc.shop.products.services;
 
 import com.jaarquesuoc.shop.products.dtos.ProductDto;
-import com.jaarquesuoc.shop.products.mappers.ProductMapper;
+import com.jaarquesuoc.shop.products.mappers.ProductsMapper;
 import com.jaarquesuoc.shop.products.models.Product;
-import com.jaarquesuoc.shop.products.repositories.ProductRepository;
+import com.jaarquesuoc.shop.products.repositories.ProductsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,46 +16,46 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ProductService {
+public class ProductsService {
 
-    private final ProductRepository productRepository;
+    private final ProductsRepository productsRepository;
 
     public List<ProductDto> getAllProductDtos() {
-        return productRepository.findAll()
+        return productsRepository.findAll()
             .stream()
-            .map(ProductMapper.INSTANCE::toProductDto)
+            .map(ProductsMapper.INSTANCE::toProductDto)
             .collect(toList());
     }
 
     public List<ProductDto> getAllProductDtosById(final List<String> ids) {
-        Iterable<Product> products = productRepository.findAllById(ids);
+        Iterable<Product> products = productsRepository.findAllById(ids);
 
         return StreamSupport.stream(products.spliterator(), false)
-            .map(ProductMapper.INSTANCE::toProductDto)
+            .map(ProductsMapper.INSTANCE::toProductDto)
             .collect(toList());
     }
 
     public Optional<ProductDto> getProductDto(final String id) {
-        return productRepository.findById(id)
-            .map(ProductMapper.INSTANCE::toProductDto);
+        return productsRepository.findById(id)
+            .map(ProductsMapper.INSTANCE::toProductDto);
     }
 
     public ProductDto upsertProduct(final ProductDto productDto) {
-        Product product = ProductMapper.INSTANCE.toProduct(productDto);
-        return ProductMapper.INSTANCE.toProductDto(productRepository.save(product));
+        Product product = ProductsMapper.INSTANCE.toProduct(productDto);
+        return ProductsMapper.INSTANCE.toProductDto(productsRepository.save(product));
     }
 
     public List<ProductDto> upsertProducts(final List<ProductDto> productDtos) {
         List<Product> products = productDtos.stream()
-            .map(ProductMapper.INSTANCE::toProduct)
+            .map(ProductsMapper.INSTANCE::toProduct)
             .collect(toList());
 
-        return productRepository.saveAll(products).stream()
-            .map(ProductMapper.INSTANCE::toProductDto)
+        return productsRepository.saveAll(products).stream()
+            .map(ProductsMapper.INSTANCE::toProductDto)
             .collect(toList());
     }
 
     public void cleanDb() {
-        productRepository.deleteAll();
+        productsRepository.deleteAll();
     }
 }
