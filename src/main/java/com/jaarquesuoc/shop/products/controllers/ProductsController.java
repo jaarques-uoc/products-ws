@@ -37,6 +37,6 @@ public class ProductsController {
 
     @PostMapping("/products")
     public ProductDto createProduct(@RequestBody ProductDto productDto) {
-        return productsService.upsertProduct(productDto);
+        return productsService.upsertProductDto(productDto);
     }
 }

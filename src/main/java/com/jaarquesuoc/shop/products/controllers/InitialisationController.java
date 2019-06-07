@@ -29,7 +29,7 @@ public class InitialisationController {
 
         return InitialisationDto.builder()
             .initialisationStatus(OK)
-            .metadata(productsService.upsertProducts(buildProducts()))
+            .metadata(productsService.upsertProductDtos(buildProducts()))
             .build();
     }
 

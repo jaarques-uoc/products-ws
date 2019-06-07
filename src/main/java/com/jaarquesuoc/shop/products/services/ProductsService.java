@@ -40,12 +40,12 @@ public class ProductsService {
             .map(ProductsMapper.INSTANCE::toProductDto);
     }
 
-    public ProductDto upsertProduct(final ProductDto productDto) {
+    public ProductDto upsertProductDto(final ProductDto productDto) {
         Product product = ProductsMapper.INSTANCE.toProduct(productDto);
         return ProductsMapper.INSTANCE.toProductDto(productsRepository.save(product));
     }
 
-    public List<ProductDto> upsertProducts(final List<ProductDto> productDtos) {
+    public List<ProductDto> upsertProductDtos(final List<ProductDto> productDtos) {
         List<Product> products = ProductsMapper.INSTANCE.toProducts(productDtos);
 
         List<Product> upsertedProducts = productsRepository.saveAll(products);
