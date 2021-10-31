@@ -28,9 +28,9 @@ public class InitialisationController {
         productsService.cleanDb();
 
         return InitialisationDto.builder()
-            .initialisationStatus(OK)
-            .metadata(productsService.upsertProductDtos(buildProducts()))
-            .build();
+                .initialisationStatus(OK)
+                .metadata(productsService.upsertProductDtos(buildProducts()))
+                .build();
     }
 
     private List<ProductDto> buildProducts() throws IOException {

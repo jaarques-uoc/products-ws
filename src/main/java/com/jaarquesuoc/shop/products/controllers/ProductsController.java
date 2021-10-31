@@ -25,14 +25,14 @@ public class ProductsController {
     @GetMapping("/products/{id}")
     public ProductDto getProductDto(@PathVariable final String id) {
         return productsService.getProductDto(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/products")
     public List<ProductDto> getProductDtos(@RequestParam(value = "ids", required = false) final List<String> ids) {
         return Optional.ofNullable(ids)
-            .map(productsService::getAllProductDtosById)
-            .orElse(productsService.getAllProductDtos());
+                .map(productsService::getAllProductDtosById)
+                .orElse(productsService.getAllProductDtos());
     }
 
     @PostMapping("/products")

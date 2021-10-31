@@ -30,14 +30,14 @@ public class ProductsService {
         Iterable<Product> productsIterable = productsRepository.findAllById(ids);
 
         List<Product> products = StreamSupport.stream(productsIterable.spliterator(), false)
-            .collect(toList());
+                .collect(toList());
 
         return ProductsMapper.INSTANCE.toProductDtos(products);
     }
 
     public Optional<ProductDto> getProductDto(final String id) {
         return productsRepository.findById(id)
-            .map(ProductsMapper.INSTANCE::toProductDto);
+                .map(ProductsMapper.INSTANCE::toProductDto);
     }
 
     public ProductDto upsertProductDto(final ProductDto productDto) {
