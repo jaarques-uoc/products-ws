@@ -2,10 +2,10 @@
 
 Command line tools:
 * Mongodb:
-    * Installation:
+    * Installation (https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/):
         * `brew tap mongodb/brew`
-        * `brew install mongodb-community@4.0`
-    * Start: `mongod --config /usr/local/etc/mongod.conf`
+        * `brew install mongodb-community@5.0`
+    * Start: `mongod --config /usr/local/etc/mongod.conf --fork`
 * Spring boot:
     * build: `./gradlew build`
     * run: `./gradlew bootRun`
